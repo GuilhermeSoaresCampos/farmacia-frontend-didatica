@@ -1,0 +1,24 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1e293b;
+  background-color: #f8fafc;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button, input, select {
+  outline: none;
+}
