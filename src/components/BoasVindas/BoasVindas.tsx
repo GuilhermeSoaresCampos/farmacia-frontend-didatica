@@ -1,8 +1,6 @@
-import type { Produto } from '../../types';
-
 type Props = {
-    produtos: Produto[];
-    alertas: Produto[];
+    produtos: any[];
+    alertas: any[];
 };
 
 function BoasVindas({ produtos, alertas }: Props) {

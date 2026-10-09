@@ -2,13 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { api } from '../../api/farmaciaApi';
 import Navegacao from '../../components/Navegacao/Navegacao';
 import Rodape from '../../components/Rodape/Rodape';
-import type { Cliente, Pedido, PedidoDetalhes, PedidoItem, Produto } from '../../types';
 
 function PedidosPage() {
-  const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [pedidos, setPedidos] = useState<Pedido[]>([]);
-  const [detalhesPedido, setDetalhesPedido] = useState<PedidoDetalhes | null>(null);
+  const [clientes, setClientes] = useState<any[]>([]);
+  const [produtos, setProdutos] = useState<any[]>([]);
+  const [pedidos, setPedidos] = useState<any[]>([]);
+  const [detalhesPedido, setDetalhesPedido] = useState<any>(null);
   const [clienteSelecionado, setClienteSelecionado] = useState('');
   const [produtoSelecionado, setProdutoSelecionado] = useState('');
   const [quantidade, setQuantidade] = useState(1);
@@ -113,7 +112,7 @@ function PedidosPage() {
     }
   };
 
-  const carregarDetalhes = async (pedido: Pedido) => {
+  const carregarDetalhes = async (pedido: any) => {
     try {
       const dados = await api.obterPedido(pedido.idVenda);
       setDetalhesPedido(dados);
@@ -279,7 +278,7 @@ function PedidosPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {detalhesPedido.itens.map((item: PedidoItem) => (
+                  {detalhesPedido.itens.map((item: any) => (
                     <tr key={`${detalhesPedido.pedido.idVenda}-${item.idProduto}`}>
                       <td>{item.descricao}</td>
                       <td>{item.qtdProduto}</td>

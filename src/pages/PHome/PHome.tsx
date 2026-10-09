@@ -3,11 +3,10 @@ import { api } from '../../api/farmaciaApi';
 import BoasVindas from '../../components/BoasVindas/BoasVindas';
 import Navegacao from '../../components/Navegacao/Navegacao';
 import Rodape from '../../components/Rodape/Rodape';
-import type { Produto } from '../../types';
 
 function PHome() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [alertas, setAlertas] = useState<Produto[]>([]);
+  const [produtos, setProdutos] = useState<any[]>([]);
+  const [alertas, setAlertas] = useState<any[]>([]);
 
   useEffect(() => {
     const carregarResumo = async () => {

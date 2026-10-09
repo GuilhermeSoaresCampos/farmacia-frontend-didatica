@@ -1,4 +1,4 @@
-import type { Cliente, Pedido, PedidoDetalhes, PedidoItem, Produto } from '../types';
+import type { Cliente, Pedido, PedidoDetalhes, Produto } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3333';
 
@@ -14,10 +14,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const body = response.status === 204 ? null : await response.json().catch(() => null);
 
   if (!response.ok) {
-    const message =
-      typeof body === 'object' && body && 'mensagem' in body
-        ? String((body as { mensagem?: string }).mensagem)
-        : 'Erro na requisição.';
+    const message = typeof body === 'object' && body && 'mensagem' in body ? String((body as { mensagem?: string }).mensagem) : 'Erro na requisição.';
     throw new Error(message);
   }
 
@@ -26,47 +23,26 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 export const api = {
   listarClientes: () => request<Cliente[]>('/clientes'),
-  cadastrarCliente: (cliente: { nome: string; cpf: string }) =>
-    request<{ mensagem: string }>('/clientes', {
+  cadastrarCliente: (cliente: Pick<Cliente, 'nome' | 'cpf'>) =>
+    request<{ idCliente: number; mensagem: string }>('/clientes', {
       method: 'POST',
       body: JSON.stringify(cliente)
     }),
-
   listarProdutos: () => request<Produto[]>('/produtos'),
-  listarProdutosAlerta: () => request<Produto[]>('/produtos/alerta'),
-  cadastrarProduto: (produto: {
-    descricao: string;
-    validade: string | null;
-    preco: number;
-    qtdEstoque: number;
-    qtdMinEstoque: number;
-  }) =>
-    request<{ mensagem: string }>('/produtos', {
+  cadastrarProduto: (produto: Omit<Produto, 'idProduto' | 'emAlerta'>) =>
+    request<{ idProduto: number; mensagem: string }>('/produtos', {
       method: 'POST',
       body: JSON.stringify(produto)
     }),
-  atualizarProduto: (
-    idProduto: number,
-    produto: Partial<{
-      descricao: string;
-      validade: string | null;
-      preco: number;
-      qtdEstoque: number;
-      qtdMinEstoque: number;
-    }>
-  ) =>
+  atualizarProduto: (idProduto: number, produto: Partial<Omit<Produto, 'idProduto' | 'emAlerta'>>) =>
     request<{ mensagem: string }>(`/produtos/${idProduto}`, {
       method: 'PUT',
       body: JSON.stringify(produto)
     }),
-
+  listarProdutosAlerta: () => request<Produto[]>('/produtos/alerta'),
   listarPedidos: () => request<Pedido[]>('/pedidos'),
-  listarItensPedido: (idVenda: number) => request<PedidoItem[]>(`/pedidos/${idVenda}/itens`),
   obterPedido: (idVenda: number) => request<PedidoDetalhes>(`/pedidos/${idVenda}`),
-  criarPedido: (pedido: {
-    idCliente: number;
-    itens: Array<{ idProduto: number; qtdProduto: number; precoUnit: number }>;
-  }) =>
+  criarPedido: (pedido: { idCliente: number; itens: Array<{ idProduto: number; qtdProduto: number; precoUnit: number }> }) =>
     request<{ idVenda: number; mensagem: string; totalItens: number }>('/pedidos', {
       method: 'POST',
       body: JSON.stringify(pedido)

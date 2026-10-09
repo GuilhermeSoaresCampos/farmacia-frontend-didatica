@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { api } from '../../api/farmaciaApi';
 import Navegacao from '../../components/Navegacao/Navegacao';
 import Rodape from '../../components/Rodape/Rodape';
-import type { Produto, ProdutoForm } from '../../types';
 
-const produtoInicial: ProdutoForm = {
+const produtoInicial = {
   descricao: '',
   validade: '',
   preco: 0,
@@ -13,10 +12,10 @@ const produtoInicial: ProdutoForm = {
 };
 
 function ProdutosPage() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [alertas, setAlertas] = useState<Produto[]>([]);
+  const [produtos, setProdutos] = useState<any[]>([]);
+  const [alertas, setAlertas] = useState<any[]>([]);
   const [termoBusca, setTermmoBusca] = useState('');
-  const [form, setForm] = useState<ProdutoForm>(produtoInicial);
+  const [form, setForm] = useState<any>(produtoInicial);
   const [editandoId, setEditandoId] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -31,10 +30,7 @@ function ProdutosPage() {
       setAlertas(listaAlertas);
     } catch (error) {
       console.error('Erro ao buscar dados de produtos:', error);
-      setFeedback({
-        type: 'error',
-        text: 'Não foi possível carregar a lista de produtos.'
-      });
+      setFeedback({ type: 'error', text: 'Não foi possível carregar a lista de produtos.' });
     }
   };
 
@@ -75,7 +71,7 @@ function ProdutosPage() {
     }
   };
 
-  const handleEditar = (produto: Produto) => {
+  const handleEditar = (produto: any) => {
     setEditandoId(produto.idProduto);
     setForm({
       descricao: produto.descricao,
@@ -98,7 +94,14 @@ function ProdutosPage() {
               <span className='eyebrow'>Cadastro de produtos</span>
               <h2>Gestão do estoque</h2>
             </div>
-            <button type='button' className='secondary-btn inline-btn' onClick={() => { setEditandoId(null); setForm(produtoInicial); }}>
+            <button
+              type='button'
+              className='secondary-btn inline-btn'
+              onClick={() => {
+                setEditandoId(null);
+                setForm(produtoInicial);
+              }}
+            >
               Novo produto
             </button>
           </div>

@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react';
 import { api } from '../../api/farmaciaApi';
 import Navegacao from '../../components/Navegacao/Navegacao';
 import Rodape from '../../components/Rodape/Rodape';
-import type { Cliente, ClienteForm } from '../../types';
 
-const clienteInicial: ClienteForm = {
+const clienteInicial = {
   nome: '',
   cpf: ''
 };
 
 function ClientesPage() {
-  const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [form, setForm] = useState<ClienteForm>(clienteInicial);
+  const [clientes, setClientes] = useState<any[]>([]);
+  const [form, setForm] = useState<any>(clienteInicial);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const carregarDados = async () => {
@@ -20,10 +19,7 @@ function ClientesPage() {
       setClientes(dados);
     } catch (error) {
       console.error('Erro ao listar clientes:', error);
-      setFeedback({
-        type: 'error',
-        text: 'Não foi possível carregar os clientes.'
-      });
+      setFeedback({ type: 'error', text: 'Não foi possível carregar os clientes.' });
     }
   };
 
@@ -36,23 +32,13 @@ function ClientesPage() {
 
     const cpf = form.cpf.replace(/\D/g, '');
     if (!form.nome.trim() || cpf.length !== 11) {
-      setFeedback({
-        type: 'error',
-        text: 'Informe um nome e um CPF válido com 11 dígitos.'
-      });
+      setFeedback({ type: 'error', text: 'Informe um nome e um CPF válido com 11 dígitos.' });
       return;
     }
 
     try {
-      await api.cadastrarCliente({
-        nome: form.nome.trim(),
-        cpf
-      });
-
-      setFeedback({
-        type: 'success',
-        text: 'Cliente cadastrado com sucesso.'
-      });
+      await (api as any).cadastrarCliente({ nome: form.nome.trim(), cpf });
+      setFeedback({ type: 'success', text: 'Cliente cadastrado com sucesso.' });
       setForm(clienteInicial);
       await carregarDados();
     } catch (error) {

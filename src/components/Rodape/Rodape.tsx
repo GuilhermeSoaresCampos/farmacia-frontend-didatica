@@ -1,4 +1,6 @@
-function Rodape(): JSX.Element {
+import type { ReactElement } from 'react';
+
+function Rodape(): ReactElement {
     return (
         <footer className="footer-bar">
             <p>Copyright - Todos os direitos e esquerdos reservados</p>
