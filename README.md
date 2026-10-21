@@ -13,10 +13,10 @@ Frontend em React + Vite para consumir a API do backend da farmácia.
 ## Execução
 1. Instale as dependências:
    npm install
-2. Inicie o backend em `farmacia-backend-didatica`
-3. Execute o frontend:
+2. Configure a URL pública da API em `.env`:
+   `VITE_SERVER_URL=https://sua-api.example.com`
+3. Execute o frontend (reinicie o servidor após alterar o `.env`):
    npm run dev
 
 ## API
-O projeto utiliza a URL configurada em `.env`:
-VITE_API_URL=http://localhost:3333
+O frontend usa `VITE_SERVER_URL` para acessar a API. `VITE_API_URL` também é aceito para manter compatibilidade com configurações existentes. Se nenhuma variável estiver definida, usa `http://localhost:3333`.

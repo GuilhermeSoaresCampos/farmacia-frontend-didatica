@@ -30,7 +30,11 @@ function ProdutosPage() {
       setAlertas(listaAlertas);
     } catch (error) {
       console.error('Erro ao buscar dados de produtos:', error);
-      setFeedback({ type: 'error', text: 'Não foi possível carregar a lista de produtos.' });
+      const mensagem = error instanceof Error ? error.message : 'Erro inesperado ao carregar produtos.';
+      setFeedback({
+        type: 'error',
+        text: `${mensagem} Confira se a API está ativa e se o CORS permite o endereço do front-end.`
+      });
     }
   };
 
@@ -236,9 +240,11 @@ function ProdutosPage() {
                         </span>
                       </td>
                       <td>
-                        <button type='button' className='link-action' onClick={() => handleEditar(produto)}>
-                          Editar
-                        </button>
+                        <div className='action-cell'>
+                          <button type='button' className='link-action' onClick={() => handleEditar(produto)}>
+                            Editar
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
