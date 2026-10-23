@@ -1,3 +1,11 @@
 node_modules
 dist
 
+# Configurações de ambiente
+.env
+.env.*
+!.env.example
+
+# Configuração local da Vercel
+.vercel
+
