@@ -1,6 +1,5 @@
+import { API_URL } from '../config/api';
 import type { Cliente, Pedido, PedidoDetalhes, Produto } from '../types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3333';
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`${API_URL}${path}`, {

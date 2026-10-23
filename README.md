@@ -18,5 +18,7 @@ Frontend em React + Vite para consumir a API do backend da farmácia.
    npm run dev
 
 ## API
-O projeto utiliza a URL configurada em `.env`:
-VITE_API_URL=http://localhost:3333
+O projeto utiliza a URL configurada em `.env.local` / `.env`:
+VITE_API_URL=https://farmacia-backend-didatica-of2c.onrender.com
+
+Crie o exemplo em `.env.example` e, localmente, copie para `.env.local` (ou `.env`) antes de iniciar o projeto.
